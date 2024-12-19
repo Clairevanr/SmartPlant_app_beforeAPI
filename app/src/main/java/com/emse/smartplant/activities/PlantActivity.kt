@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.emse.smartplant.R
+import com.emse.smartplant.services.PlantService
 import com.emse.smartplant.ui.theme.SmartPlantTheme
 
 
@@ -29,13 +30,13 @@ class PlantActivity:  ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val param = intent.getStringExtra(MainActivity.PLANT_PARAM)
-        val room = PlantService.findByNameOrId(param)
+        val plant = PlantService.findByNameOrId(param)
 
         setContent {
             SmartPlantTheme() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    if (room != null) {
-                        PlantDetail(room, Modifier.padding(innerPadding))
+                    if (plant != null) {
+                        PlantDetail(plant.name, Modifier.padding(innerPadding))
                     } else {
                         NoPlant(Modifier.padding(innerPadding))
                     }

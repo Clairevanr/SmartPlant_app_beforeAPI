@@ -4,7 +4,7 @@ import androidx.core.text.isDigitsOnly
 import com.emse.smartplant.models.PlantDto
 
 
-object RoomService {
+object PlantService {
     val PLANT_KIND: List<String> = listOf("Succulent", "Monstera", "Orchid", "Bonzai", "Cactus")
     val PLANT_NUMBER: List<Char> = ('A'..'Z').toList()
 
@@ -50,6 +50,32 @@ object RoomService {
         for (plants in PLANTS){
             if (plants.name == name){
                 return plants
+            }
+        }
+        return null
+    }
+
+    fun updatePlant(id: Long, plant: PlantDto): PlantDto {
+        // TODO update an existing room with the given values
+        val index = PLANTS.indexOfFirst { it.id == id }
+        val updatedPlant = findById(id)?.copy(
+            name = plant.name,
+            plant_type = plant.plant_type,
+            current_temperature = plant.current_temperature,
+            current_enlightment = plant.current_enlightment,
+            current_humidity = plant.current_humidity,
+            max_humidity = plant.max_humidity,
+            min_humidity = plant.min_humidity
+        ) ?: throw IllegalArgumentException()
+        return PLANTS.set(index, updatedPlant)
+    }
+
+    fun findByNameOrId(nameOrId: String?): PlantDto? {
+        if (nameOrId != null) {
+            return if (nameOrId.isDigitsOnly()) {
+                findById(nameOrId.toLong())
+            } else {
+                findByName(nameOrId)
             }
         }
         return null
