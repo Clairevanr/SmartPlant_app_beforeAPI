@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">SmartPlant</string>
+    <string name="app_logo_description">Smartplant logo</string>
+    <string name="app_main_welcome">Your mobile assistant that helps you take care of your beloved plants</string>
+    <string name="act_main_fill_name">Fill a name</string>
+    <string name="act_main_open">Open</string>
+    <string name="act_plant_name">Plant name</string>
+    <string name="act_plant_none">No plant found for this id or name</string>
+    <string name="act_plant_current_humidity">Current temperature</string>
+    <string name="act_plant_current_enlightment">Current enlightment</string>
+    <string name="act_plant_current_temperature">Current temperature</string>
 </resources>
