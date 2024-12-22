@@ -2,6 +2,7 @@ package com.emse.smartplant.activities
 
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalContext
+import com.emse.smartplant.SmartPlantTopAppBar
 import com.emse.smartplant.models.PlantDto
 import com.emse.smartplant.services.PlantService
 import com.emse.smartplant.ui.theme.PurpleGrey80
@@ -29,17 +31,30 @@ import com.emse.smartplant.ui.theme.SmartPlantTheme
 
 
 class PlantListActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SmartPlantTheme() {
-                Surface(modifier = Modifier.padding(16.dp)) {
-                    RoomListDisplay()
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        SmartPlantTopAppBar(
+                            returnAction = { finish() } // Allows to go back to the plant list
+
+                        )
+                    }
+                ) {
+                    Surface(modifier = Modifier.padding(16.dp)) {
+                        RoomListDisplay()
+                    }
+
                 }
             }
-        }
-    }
 
+        }
+
+    }
 }
 
 @Composable

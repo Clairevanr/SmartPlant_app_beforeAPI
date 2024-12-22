@@ -12,6 +12,10 @@
     <string name="app_go_back_description">Go back</string>
     <string name="app_go_plant_description">Plants</string>
     <string name="water_it"> Water your plant !</string>
+    <string name="drowned_it"> For your plant\'s sake please stop drowning it !</string>
+    <string name="plant_fine"> Your plant is fine !</string>
+    <string name="app_go_plantlist"> You will be directed to the plants list</string>
+    <string name="app_menu"> The app navigation menu </string>
 
 
 </resources>

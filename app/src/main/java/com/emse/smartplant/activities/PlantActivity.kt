@@ -1,5 +1,6 @@
 package com.emse.smartplant.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,6 +25,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.emse.smartplant.R
+import com.emse.smartplant.SmartPlantTopAppBar
+import com.emse.smartplant.models.PlantDto
 import com.emse.smartplant.models.PlantViewModel
 import com.emse.smartplant.services.PlantService
 import com.emse.smartplant.ui.theme.SmartPlantTheme
@@ -37,14 +40,28 @@ class PlantActivity:  ComponentActivity() {
         val param = intent.getStringExtra(MainActivity.PLANT_PARAM)
         viewModel.plant = PlantService.findByNameOrId(param)
 
+
+
+
         setContent {
             SmartPlantTheme() {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        SmartPlantTopAppBar(
+                            returnAction = { finish() } // Allows to go back to the plant list
+
+                        )
+                    }
+
+
+                ) { innerPadding ->
                     if (viewModel.plant != null) {
                         PlantDetail(viewModel, Modifier.padding(innerPadding))
                     } else {
                         NoPlant(Modifier.padding(innerPadding))
                     }
+
 
                 }
             }
@@ -100,11 +117,27 @@ fun PlantDetail(model: PlantViewModel, modifier: Modifier = Modifier) {
 
 @Composable
 fun thirstyPlant(model: PlantViewModel, modifier: Modifier = Modifier){
-
-    Text(
-        text = stringResource(R.string.water_it),
-        style = MaterialTheme.typography.bodyLarge
-    )
+    val plant_view = model.plant
+    if (plant_view != null) {
+        if (plant_view.current_humidity < plant_view.min_humidity){
+            Text(
+                text = stringResource(R.string.water_it),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+        else if (plant_view.current_humidity > plant_view.max_humidity){
+            Text(
+                text = stringResource(R.string.drowned_it),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+        else{
+            Text(
+                text = stringResource(R.string.plant_fine),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+    }
 }
 
 @Composable
