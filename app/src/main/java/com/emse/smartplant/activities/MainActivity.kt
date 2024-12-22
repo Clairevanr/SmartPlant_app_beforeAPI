@@ -46,30 +46,29 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        // Action to do when the button is clicked
-        val onSayHelloButtonClick: (name: String) -> Unit = { name ->
-            val intent = Intent(this, PlantActivity::class.java).apply {
-                putExtra(PLANT_PARAM, name)
-            }
+        val onButtonClick: (String) -> Unit = { name ->
+            // Here you can access to the activity state (ie baseContext)
+            val intent = Intent(this, PlantListActivity::class.java)
+            Toast.makeText(baseContext, "Hello $name !", Toast.LENGTH_LONG).show()
             startActivity(intent)
         }
-
 
 
         setContent {
             SmartPlantTheme() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        onClick = onSayHelloButtonClick,
+                        onClick = onButtonClick,
                         modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
         }
     }
-
 }
+
+
+
 
 /**
  * This function allows to display the app logo when greeting the user
@@ -90,7 +89,7 @@ fun AppLogo(modifier: Modifier) {
  */
 
 @Composable
-fun Greeting(onClick: (name: String) -> Unit,modifier: Modifier = Modifier) {
+fun Greeting(onClick: (String) -> Unit, modifier: Modifier = Modifier) {
     Column {
         AppLogo(Modifier.padding(top = 32.dp).fillMaxWidth())
         Text(
@@ -128,14 +127,3 @@ fun Greeting(onClick: (name: String) -> Unit,modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SmartPlantTheme() {
-        //Provide a mock onClick function for the preview
-        Greeting(onClick = { name ->
-             //Handle the name, or just print it for preview purposes
-            println("Clicked on: $name")
-        })
-    }
-}

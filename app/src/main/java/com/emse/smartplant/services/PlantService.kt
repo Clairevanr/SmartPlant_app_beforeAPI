@@ -2,21 +2,31 @@ package com.emse.smartplant.services
 
 import androidx.core.text.isDigitsOnly
 import com.emse.smartplant.models.PlantDto
+import java.util.UUID
+
 
 
 object PlantService {
     val PLANT_KIND: List<String> = listOf("Succulent", "Monstera", "Orchid", "Bonzai", "Cactus")
-    val PLANT_NUMBER: List<Char> = ('A'..'Z').toList()
+    var plant_counter: Long = 0
+
+
 
 
 
 
     fun generatePlant(id: Long): PlantDto {
-        val roomName = "Plant ${PLANT_NUMBER.random()}"
+
+
+
+
+
+        val plantName = "Plant ${PlantService.plant_counter}"
+        PlantService.plant_counter+=1
 
         return PlantDto(
             id = id,
-            name = roomName,
+            name = plantName,
             plant_type = PLANT_KIND.random(),
             current_temperature = (15..30).random().toDouble(),
             current_enlightment = (15..30).random().toDouble(),
